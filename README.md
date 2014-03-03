@@ -29,7 +29,10 @@ Verify that the existing application runs before modifying.  Then add the follow
 1. A todo may be marked as complete.
 1. A todo may be removed from the page.
 
-(Hint: Create named functions and bind them to the appropriate buttons)
+Hint:
+
+You should use a mix of jQuery techniques and OO JS techniques.  Feel free to write a class which is responsible for setting up event bindings on buttons.  Let those event callbacks delegate actions to other
+collaborator classes just like you learned about in POODR.  While the language and syntax has changed, the rules of good OO never go out of style, unlike my Members Only &trade; jacket.
 
 ### Release 1 : Drag and Drop
 
