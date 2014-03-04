@@ -19,17 +19,21 @@ function newTodoEvent(form){
          dataType: 'json',
          // context: this,
          success: function(response){
-            todo = new Todo(response.todo.todo_content, response.todo.id);
-            todo.add ;
-            todo.build ;
+            createTodo(response.todo.todo_content, response.todo.id)
+            // todo = new Todo(response.todo.todo_content, response.todo.id);
+            // todo.add ;
+            // todo.build ;
          }
     });
 };
 
+function createTodo(todo_content, id) {
+  todo = new Todo(todo_content, id);
+  todo.add() ;
+};
 
 
 function Todo(todoContent, todoId) {
-    debugger;
     this.id = todoId;
     this.todoContent = todoContent;
     this.template = $.trim($('#todo_template').html());
@@ -38,8 +42,8 @@ function Todo(todoContent, todoId) {
   Todo.prototype.build = function() {
     var $template = $(this.template);
     $template.find('h2').text(this.todoContent);
-    $template.find('.delete')
-    $template.find('.complete')
+    $template.find('.delete');
+    $template.find('.complete');
     // $template.find('.delete').on('click', function() {this.deleteTodo});
     // $template.find('.complete').on('click', function() {this.completeTodo});
     return $template;
