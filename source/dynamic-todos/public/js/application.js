@@ -1,24 +1,50 @@
-$(document).ready(function() {
-  var todoTemplate = $.trim($('#todo_template').html());
-
-  function bindEvents() {
-    // Bind functions which add, remove, and complete todos to the appropriate
-    // elements
-  }
-
-  //Create functions to add, remove and complete todos
-
-
-
-  function buildTodo(todoName) {
-    // Creates an jQueryDOMElement from the todoTemplate.
-    var $todo = $(todoTemplate);
-    // Modifies it's text to use the passed in todoName.
-    $todo.find('h2').text(todoName);
-    // Returns the jQueryDOMElement to be used elsewhere.
-    return $todo;
-  }
-
-
+$(function() {
   bindEvents();
 });
+
+var todoTemplate = $.trim($('#todo_template').html());
+
+function bindEvents() {
+    $('.submitToDoContent').on('click', function(e) {
+      e.preventDefault();
+      newTodoEvent(e.target.parentNode);
+    })
+  }
+
+function newTodoEvent(form){
+    $.ajax({
+         url   : form.getAttribute('action'),
+         type  : form.getAttribute('method'),
+         data  : {todo_content: $('#todo_content').val()},
+         dataType: 'json',
+         // context: this,
+         success: function(response){
+            todo = new Todo(response.todo.todo_content, response.todo.id);
+            todo.add ;
+            todo.build ;
+         }
+    });
+};
+
+
+
+function Todo(todoContent, todoId) {
+    debugger;
+    this.id = todoId;
+    this.todoContent = todoContent;
+    this.template = $.trim($('#todo_template').html());
+  };
+
+  Todo.prototype.build = function() {
+    var $template = $(this.template);
+    $template.find('h2').text(this.todoContent);
+    $template.find('.delete')
+    $template.find('.complete')
+    // $template.find('.delete').on('click', function() {this.deleteTodo});
+    // $template.find('.complete').on('click', function() {this.completeTodo});
+    return $template;
+  };
+
+  Todo.prototype.add = function() {
+    $('.todo_list').css('display', 'block').append(this.build());
+  };
