@@ -15,7 +15,7 @@ function bindEvents() {
     }),
     $('.todo_list').on('click', '.complete', function(e) {
       e.preventDefault();
-      console.log(e.target.parentNode.parentNode.parentNode);
+      updateTodoEvent(e.target.getAttribute("data-id"));
     })
   }
 
@@ -41,6 +41,16 @@ function deleteTodoEvent(id) {
     });
 };
 
+function updateTodoEvent(id) {
+     $.ajax({
+         url   : '/todos/' + id,
+         type  : 'patch',
+         success: function(){
+            completeTodo(id);
+         }
+    });
+};
+
 
 function createTodo(todo_content, id) {
   todo = new Todo(todo_content, id);
@@ -49,6 +59,10 @@ function createTodo(todo_content, id) {
 
 function deleteTodo(id) {
   $('.delete[data-id=' + id +']').parents('.todo').remove()
+};
+
+function completeTodo(id) {
+  $('.complete[data-id=' + id +']').parents('.todo').addClass('complete');
 };
 
 function Todo(todoContent, todoId) {
