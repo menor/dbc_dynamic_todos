@@ -28,9 +28,10 @@ end
 
 delete '/todos/:id' do
   Todo.destroy(params[:id])
-  if @todo.destroy
-      {:todo => @todo, :status => "success"}.to_json
-  else
-      {:todo => @todo, :status => "failure"}.to_json
-  end
+  # if @todo.destroy
+  #     {:todo => @todo, :status => "success"}.to_json
+  # else
+  #     {:todo => @todo, :status => "failure"}.to_json
+  # end
+  p 'asdasddasd12321312321231231231221213'
 end

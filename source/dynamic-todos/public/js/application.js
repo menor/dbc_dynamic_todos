@@ -11,7 +11,11 @@ function bindEvents() {
     }),
     $('.todo_list').on('click', '.delete', function(e) {
       e.preventDefault();
-      console.log(this.getAttribute("data-id"));
+      deleteTodoEvent(e.target.parentNode.parentNode.parentNode, e.target.getAttribute("data-id"));
+    }),
+    $('.todo_list').on('click', '.complete', function(e) {
+      e.preventDefault();
+      console.log(e.target.parentNode.parentNode.parentNode);
     })
   }
 
@@ -21,9 +25,18 @@ function newTodoEvent(form){
          type  : form.getAttribute('method'),
          data  : {todo_content: $('#todo_content').val()},
          dataType: 'json',
-         // context: this,
          success: function(response){
             createTodo(response.todo.todo_content, response.todo.id);
+         }
+    });
+};
+
+function deleteTodoEvent(div, id) {
+     $.ajax({
+         url   : '/todos/' + id,
+         type  : 'delete',
+         success: function(){
+            deleteTodo(id);
          }
     });
 };
@@ -34,6 +47,9 @@ function createTodo(todo_content, id) {
   todo.add() ;
 };
 
+function deleteTodo(id) {
+  $('.delete[data-id=' + id +']').parents('.todo').remove()
+};
 
 function Todo(todoContent, todoId) {
     this.id = todoId;
