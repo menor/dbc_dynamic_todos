@@ -11,7 +11,7 @@ function bindEvents() {
     }),
     $('.todo_list').on('click', '.delete', function(e) {
       e.preventDefault();
-      deleteTodoEvent(e.target.parentNode.parentNode.parentNode, e.target.getAttribute("data-id"));
+      deleteTodoEvent(e.target.getAttribute("data-id"));
     }),
     $('.todo_list').on('click', '.complete', function(e) {
       e.preventDefault();
@@ -31,7 +31,7 @@ function newTodoEvent(form){
     });
 };
 
-function deleteTodoEvent(div, id) {
+function deleteTodoEvent(id) {
      $.ajax({
          url   : '/todos/' + id,
          type  : 'delete',
