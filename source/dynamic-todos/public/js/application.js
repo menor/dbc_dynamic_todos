@@ -16,6 +16,10 @@ function bindEvents() {
     $('.todo_list').on('click', '.complete', function(e) {
       e.preventDefault();
       updateTodoEvent(e.target.getAttribute("data-id"));
+    }),
+    $('.todo_list').on('click', '.complete', function(e) {
+      e.preventDefault();
+      updateTodoEvent(e.target.getAttribute("data-id"));
     })
   }
 
@@ -76,8 +80,6 @@ function Todo(todoContent, todoId) {
     $template.find('h2').text(this.todoContent);
     $template.find('.delete').attr("data-id", this.id);
     $template.find('.complete').attr("data-id", this.id);
-    // $template.find('.delete').on('click', function() {this.deleteTodo});
-    // $template.find('.complete').on('click', function() {this.completeTodo});
     return $template;
   };
 
@@ -85,5 +87,3 @@ function Todo(todoContent, todoId) {
     $('.todo_list').css('display', 'block').append(this.build());
   };
 
-
-// $template.find('.delete').attr('href', this.id)
