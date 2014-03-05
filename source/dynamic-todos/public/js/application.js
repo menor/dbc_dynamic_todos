@@ -8,6 +8,10 @@ function bindEvents() {
     $('.submitToDoContent').on('click', function(e) {
       e.preventDefault();
       newTodoEvent(e.target.parentNode);
+    }),
+    $('.todo_list').on('click', '.delete', function(e) {
+      e.preventDefault();
+      console.log(this.getAttribute("data-id"));
     })
   }
 
@@ -19,13 +23,11 @@ function newTodoEvent(form){
          dataType: 'json',
          // context: this,
          success: function(response){
-            createTodo(response.todo.todo_content, response.todo.id)
-            // todo = new Todo(response.todo.todo_content, response.todo.id);
-            // todo.add ;
-            // todo.build ;
+            createTodo(response.todo.todo_content, response.todo.id);
          }
     });
 };
+
 
 function createTodo(todo_content, id) {
   todo = new Todo(todo_content, id);
@@ -42,8 +44,8 @@ function Todo(todoContent, todoId) {
   Todo.prototype.build = function() {
     var $template = $(this.template);
     $template.find('h2').text(this.todoContent);
-    $template.find('.delete');
-    $template.find('.complete');
+    $template.find('.delete').attr("data-id", this.id);
+    $template.find('.complete').attr("data-id", this.id);
     // $template.find('.delete').on('click', function() {this.deleteTodo});
     // $template.find('.complete').on('click', function() {this.completeTodo});
     return $template;
@@ -52,3 +54,6 @@ function Todo(todoContent, todoId) {
   Todo.prototype.add = function() {
     $('.todo_list').css('display', 'block').append(this.build());
   };
+
+
+// $template.find('.delete').attr('href', this.id)
